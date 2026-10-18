@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبكة الكلالي - متجر الكروت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2e;
+            --primary-neon: #00f2fe;
+            --secondary-neon: #4facfe;
+            --accent-purple: #7f00ff;
+            --text-color: #e2e8f0;
+            --danger: #ff4b5c;
+            --success: #00e676;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: var(--primary-neon);
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: #8a99ad;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, var(--primary-neon), var(--accent-purple));
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(127, 0, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        .user-info-bar {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 12px;
+            border-right: 4px solid var(--primary-neon);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-id {
+            font-weight: bold;
+            color: var(--primary-neon);
+            font-size: 14px;
+        }
+
+        .user-balance {
+            color: var(--success);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .admin-badge {
+            background: var(--danger);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin: 20px 0 10px;
+            color: var(--primary-neon);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .card-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card-item h3 {
+            color: var(--secondary-neon);
+            margin-bottom: 5px;
+        }
+
+        .card-item .price {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .btn-buy {
+            background: var(--success);
+            color: #000;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .history-list {
+            list-style: none;
+        }
+
+        .history-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            border-right: 3px solid var(--secondary-neon);
+        }
+
+        .admin-panel {
+            background: rgba(255, 75, 92, 0.05);
+            border: 1px dashed var(--danger);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- شاشة تسجيل الدخول / إنشاء حساب -->
+    <div id="auth-screen">
+        <div class="header">
+            <h1>⚡ متجر الكروت الرقمية</h1>
+            <p style="color: #a0aec0; font-size: 13px;">مرحباً بك، قم بإنشاء حسابك للبدء</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">دخول</button>
+            <button class="tab-btn" onclick="switchTab('register')">إنشاء حساب</button>
+        </div>
+
+        <!-- نموذج تسجيل الدخول -->
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="login-email" class="form-control" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <input type="password" id="login-password" class="form-control" required placeholder="******">
+            </div>
+            <button type="submit" class="btn-main">تسجيل الدخول</button>
+        </form>
+
+        <!-- نموذج إنشاء الحساب -->
+        <form id="register-form" class="hidden" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="reg-email" class="form-control" required placeholder="name@example.com">
+            </div>
+            <div class="form-group" id="otp-group">
+                <button type="button" class="btn-main" style="background: var(--secondary-neon); color: #000; margin-bottom: 10px;" onclick="sendOTP()">إرسال رمز التحقق للبريد</button>
+                <input type="text" id="reg-otp" class="form-control" placeholder="أدخل رمز التحقق المرسل">
+            </div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <input type="password" id="reg-password" class="form-control" required placeholder="******">
+            </div>
+            <div class="form-group">
+                <label>تأكيد كلمة السر</label>
+                <input type="password" id="reg-confirm-password" class="form-control" required placeholder="******">
+            </div>
+            <button type="submit" class="btn-main">تأكيد وانشاء الحساب</button>
+        </form>
+    </div>
+
+    <!-- شاشة المتجر الرئيسية -->
+    <div id="app-screen" class="hidden">
+        <div class="user-info-bar">
+            <div>
+                <div class="user-id">ID: <span id="display-id">88888888</span> <span id="admin-tag" class="admin-badge hidden">آدمن</span></div>
+                <div style="font-size: 12px; color: #a0aec0;" id="display-email">user@mail.com</div>
+            </div>
+            <div>
+                <div class="user-balance"><span id="display-balance">0</span> ريال</div>
+                <button onclick="logout()" style="background: none; border: none; color: var(--danger); cursor: pointer; font-size: 12px;">خروج</button>
+            </div>
+        </div>
+
+        <!-- لوحة تحكم الآدمن (تظهر فقط للإيميل alklalyzyd72@gmail.com) -->
+        <div id="admin-section" class="admin-panel hidden">
+            <h3 style="color: var(--danger); font-size: 16px; margin-bottom: 10px;">👑 لوحة إدارية (الآدمن)</h3>
+            <div class="form-group">
+                <label>شحن حساب مستخدم عبر الـ ID:</label>
+                <input type="text" id="admin-target-id" class="form-control" placeholder="أدخل ID المستخدم (8 أرقام)">
+            </div>
+            <div class="form-group">
+                <label>المبلغ (ريال):</label>
+                <input type="number" id="admin-amount" class="form-control" placeholder="المبلغ المراد شحنه">
+            </div>
+            <button onclick="adminTopUp()" class="btn-main" style="background: var(--danger);">تأكيد شحن الحساب</button>
+        </div>
+
+        <!-- قسم الكروت -->
+        <div class="section-title">فئات الكروت المتاحة</div>
+        <div class="cards-grid" id="cards-container">
+            <!-- سيتم توليد الكروت تلقائياً -->
+        </div>
+
+        <!-- قسم سجل العمليات (بحد أقصى 3) -->
+        <div class="section-title">سجل العمليات (آخر 3)</div>
+        <ul class="history-list" id="history-container">
+            <li class="history-item">لا يوجد عمليات سابقة حتى الآن</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    const ADMIN_EMAIL = "alklalyzyd72@gmail.com";
+    let generatedOTP = null;
+    let currentUser = null;
+
+    // فئات الكروت المطلوبة
+    const cardCategories = [100, 200, 300, 500, 1000, 1500, 2500, 5000];
+
+    // تبديل واجهات التسجيل
+    function switchTab(type) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        if(type === 'login') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+        }
+    }
+
+    // إرسال رمز تحقق افتراضي للبريد
+    function sendOTP() {
+        const email = document.getElementById('reg-email').value;
+        if(!email) { alert("يرجى إدخال البريد الإلكتروني أولاً!"); return; }
+        generatedOTP = Math.floor(100000 + Math.random() * 900000);
+        alert(`رمز التحقق المرسل لـ ${email} هو: ${generatedOTP}`);
+    }
+
+    // توليد ID مكون من 8 أرقام
+    function generateID() {
+        return Math.floor(10000000 + Math.random() * 90000000).toString();
+    }
+
+    // إنشاء حساب جديد
+    function handleRegister(e) {
+        e.preventDefault();
+        const email = document.getElementById('reg-email').value.trim();
+        const otp = document.getElementById('reg-otp').value.trim();
+        const pass = document.getElementById('reg-password').value;
+        const confirmPass = document.getElementById('reg-confirm-password').value;
+
+        if (otp !== String(generatedOTP)) { alert("رمز التحقق غير صحيح!"); return; }
+        if (pass !== confirmPass) { alert("كلمات السر غير متطابقة!"); return; }
+
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        if (users[email]) { alert("هذا البريد مسجل مسبقاً!"); return; }
+
+        const newUser = {
+            email: email,
+            password: pass,
+            id: generateID(),
+            balance: 0,
+            history: []
+        };
+
+        users[email] = newUser;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert("تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
+        switchTab('login');
+    }
+
+    // تسجيل الدخول
+    function handleLogin(e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const pass = document.getElementById('login-password').value;
+
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+
+        // إنشاء حساب آدمن تلقائي إن لم يكن موجوداً
+        if (email === ADMIN_EMAIL && !users[ADMIN_EMAIL]) {
+            users[ADMIN_EMAIL] = {
+                email: ADMIN_EMAIL,
+                password: pass,
+                id: "10000000",
+                balance: 100000,
+                history: []
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        const user = users[email];
+        if (!user || user.password !== pass) {
+            alert("البريد أو كلمة السر غير صحيحة!");
+            return;
+        }
+
+        currentUser = user;
+        loadApp();
+    }
+
+    // تحميل شاشة التطبيق الرئيسية
+    function loadApp() {
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('app-screen').classList.remove('hidden');
+
+        document.getElementById('display-id').textContent = currentUser.id;
+        document.getElementById('display-email').textContent = currentUser.email;
+        document.getElementById('display-balance').textContent = currentUser.balance;
+
+        if (currentUser.email === ADMIN_EMAIL) {
+            document.getElementById('admin-section').classList.remove('hidden');
+            document.getElementById('admin-tag').classList.remove('hidden');
+        } else {
+            document.getElementById('admin-section').classList.add('hidden');
+            document.getElementById('admin-tag').classList.add('hidden');
+        }
+
+        renderCards();
+        renderHistory();
+    }
+
+    // عرض الكروت
+    function renderCards() {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+        cardCategories.forEach(amount => {
+            const div = document.createElement('div');
+            div.className = 'card-item';
+            div.innerHTML = `
+                <h3>كرت ${amount}</h3>
+                <div class="price">${amount} ريال</div>
+                <button class="btn-buy" onclick="buyCard(${amount})">شراء الآن</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // شراء كرت وتطبيق قاعدة حظر زيادة السجل عن 3
+    function buyCard(amount) {
+        if (currentUser.balance < amount) {
+            alert("رصيدك غير كافٍ! تواصل مع الإدارة لشحن الحساب.");
+            return;
+        }
+
+        currentUser.balance -= amount;
+        addHistoryRecord(`شراء كرت فئة ${amount} ريال`);
+        updateUserData();
+        alert(`تم شراء كرت فئة ${amount} بنجاح!`);
+    }
+
+    // إضافة سجل وحذف القديم تلقائياً (حد أقصى 3)
+    function addHistoryRecord(text) {
+        if (!currentUser.history) currentUser.history = [];
+        currentUser.history.unshift({ text: text, date: new Date().toLocaleTimeString('ar-YE') });
+        
+        // اقتطاع السجل للحد الأقصى 3
+        if (currentUser.history.length > 3) {
+            currentUser.history = currentUser.history.slice(0, 3);
+        }
+    }
+
+    // عرض السجل
+    function renderHistory() {
+        const container = document.getElementById('history-container');
+        container.innerHTML = '';
+
+        if (!currentUser.history || currentUser.history.length === 0) {
+            container.innerHTML = '<li class="history-item">لا يوجد عمليات سابقة حتى الآن</li>';
+            return;
+        }
+
+        currentUser.history.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'history-item';
+            li.innerHTML = `<span>${item.text}</span> <span style="color: #a0aec0;">${item.date}</span>`;
+            container.appendChild(li);
+        });
+    }
+
+    // شحن حساب عبر الآدمن
+    function adminTopUp() {
+        const targetID = document.getElementById('admin-target-id').value.trim();
+        const amount = parseFloat(document.getElementById('admin-amount').value);
+
+        if (!targetID || isNaN(amount) || amount <= 0) {
+            alert("يرجى إدخال البيانات بشكل صحيح!");
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        let targetUserKey = Object.keys(users).find(key => users[key].id === targetID);
+
+        if (!targetUserKey) {
+            alert("لم يتم العثور على مستخدم يملك هذا الـ ID!");
+            return;
+        }
+
+        users[targetUserKey].balance += amount;
+        
+        // إضافة سجل لشحن الآدمن مع الحفاظ على قاعدة 3 عناصر
+        if (!users[targetUserKey].history) users[targetUserKey].history = [];
+        users[targetUserKey].history.unshift({ text: `شحن حساب بقيمة ${amount} ريال`, date: new Date().toLocaleTimeString('ar-YE') });
+        if (users[targetUserKey].history.length > 3) {
+            users[targetUserKey].history = users[targetUserKey].history.slice(0, 3);
+        }
+
+        localStorage.setItem('users', JSON.stringify(users));
+
+        if (currentUser.id === targetID) {
+            currentUser.balance += amount;
+            currentUser.history = users[targetUserKey].history;
+            loadApp();
+        }
+
+        alert(`تم شحن ${amount} ريال للحساب صاحب الـ ID (${targetID}) بنجاح!`);
+        document.getElementById('admin-target-id').value = '';
+        document.getElementById('admin-amount').value = '';
+    }
+
+    // تحديث البيانات في الذاكرة
+    function updateUserData() {
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        users[currentUser.email] = currentUser;
+        localStorage.setItem('users', JSON.stringify(users));
+        loadApp();
+    }
+
+    // تسجيل الخروج
+    function logout() {
+        currentUser = null;
+        document.getElementById('app-screen').classList.add('hidden');
+        document.getElementById('auth-screen').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
