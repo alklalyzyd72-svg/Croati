@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شبكة الكلالي - متجر كروت الواي فاي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #080c14;
+      --card-bg: #111827;
+      --primary-neon: #00f2fe;
+      --secondary-neon: #4facfe;
+      --accent-purple: #9d4edd;
+      --text-color: #f1f5f9;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 12px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 450px;
+      background: #0f172a;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    header {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--primary-neon), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .auth-section, .dashboard, .admin-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .phone-input {
+      display: flex;
+      direction: ltr;
+    }
+
+    .phone-prefix {
+      background: #1e293b;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 10px;
+      color: var(--primary-neon);
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      background: #1e293b;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .phone-input input {
+      border-radius: 0 10px 10px 0;
+      direction: rtl;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary-neon);
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+      color: #000;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .user-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .user-info h3 {
+      font-size: 20px;
+      color: var(--primary-neon);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .wifi-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 242, 254, 0.15);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wifi-card h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .wifi-card .price {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--primary-neon);
+      margin-bottom: 10px;
+    }
+
+    .stock-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .log-box {
+      background: #020617;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 12px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .log-item {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .admin-badge {
+      background: var(--accent-purple);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>شبكة الكلالي الرقمية</h1>
+    <p>خدمة بيع وتوزيع كروت الواي فاي في اليمن</p>
+  </header>
+
+  <!-- قسم التسجيل / الدخول -->
+  <div id="authSection" class="auth-section">
+    <div class="input-group">
+      <label>أدخل رقم الهاتف اليمني:</label>
+      <div class="phone-input">
+        <span class="phone-prefix">+967</span>
+        <input type="number" id="phoneInput" placeholder="73XXXXXXXX">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="requestWhatsAppAuth()">التأكيد والتفعيل عبر الواتساب 💬</button>
+  </div>
+
+  <!-- لوحة المستخدم الرئيسية -->
+  <div id="userDashboard" class="dashboard hidden">
+    <div class="user-card">
+      <div class="user-info">
+        <p id="userPhoneDisplay">رقم الحساب: -</p>
+        <p>الرصيد الحالي:</p>
+        <h3 id="userBalance">0 ريال</h3>
+      </div>
+      <button class="btn btn-whatsapp" style="width: auto; padding: 8px 12px;" onclick="contactAdminForTopUp()">شحن رصيد ➕</button>
+    </div>
+
+    <h3>اختر الفئة المطلوبة:</h3>
+    <div class="cards-grid" id="cardsGrid">
+      <!-- الكروت سيتم إنشاؤها عبر JavaScript -->
+    </div>
+
+    <h3>سجل العمليات الأخير:</h3>
+    <div class="log-box" id="transactionLogs">
+      <div class="log-item">لا توجد عمليات سابقة</div>
+    </div>
+
+    <button class="btn btn-danger" onclick="logout()">تسجيل الخروج</button>
+  </div>
+
+  <!-- لوحة الأدمن الخاصة (تظهر فقط للأدمن) -->
+  <div id="adminSection" class="admin-section hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>لوحة التحكم <span class="admin-badge">الأدمن</span></h3>
+    </div>
+    
+    <div class="input-group">
+      <label>إضافة أكواد كروت جديدة:</label>
+      <select id="adminCardCategory">
+        <option value="100">فئة 100 ريال</option>
+        <option value="200">فئة 200 ريال</option>
+        <option value="500">فئة 500 ريال</option>
+        <option value="1000">فئة 1000 ريال</option>
+        <option value="2000">فئة 2000 ريال</option>
+        <option value="3000">فئة 3000 ريال</option>
+        <option value="4000">فئة 4000 ريال</option>
+        <option value="5000">فئة 5000 ريال</option>
+      </select>
+      <input type="text" id="adminCardCodes" placeholder="أدخل أرقام الكروت (مفصولة بفواصل)">
+      <button class="btn btn-primary" onclick="addCardStock()">إضافة للكميات المخزنة 📦</button>
+    </div>
+
+    <div class="input-group">
+      <label>شحن رصيد مشترك:</label>
+      <input type="number" id="targetUserPhone" placeholder="رقم المشترك (73XXXXXXX)">
+      <input type="number" id="topUpAmount" placeholder="المبلغ بالريال">
+      <button class="btn btn-primary" onclick="adminTopUpUser()">تأكيد الشحن 💵</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ADMIN_PHONE = "736822916";
+  const ADMIN_WHATSAPP = "967736822916";
+
+  const cardTiers = [100, 200, 500, 1000, 2000, 3000, 4000, 5000];
+
+  // تهيئة البيانات المحلية
+  let currentUser = localStorage.getItem('currentUser') || null;
+  let cardStock = JSON.parse(localStorage.getItem('cardStock')) || {
+    "100": ["100-AAA", "100-BBB"],
+    "200": ["200-CCC"],
+    "500": [],
+    "1000": [],
+    "2000": [],
+    "3000": [],
+    "4000": [],
+    "5000": []
+  };
+
+  let userBalances = JSON.parse(localStorage.getItem('userBalances')) || {};
+
+  function initApp() {
+    if (currentUser) {
+      showDashboard();
+    }
+  }
+
+  function requestWhatsAppAuth() {
+    const phone = document.getElementById('phoneInput').value.trim();
+    if (phone.length < 9) {
+      alert("يرجى إدخال رقم هاتف يمني صحيح!");
+      return;
+    }
+
+    currentUser = phone;
+    localStorage.setItem('currentUser', currentUser);
+    
+    if (!userBalances[currentUser]) {
+      userBalances[currentUser] = 0;
+      localStorage.setItem('userBalances', JSON.stringify(userBalances));
+    }
+
+    // فتح الواتساب للتأكيد
+    const msg = encodeURIComponent(`مرحباً إدارة شبكة الكلالي، أود تفعيل حسابي برقم: ${phone}`);
+    window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${msg}`, '_blank');
+
+    showDashboard();
+  }
+
+  function showDashboard() {
+    document.getElementById('authSection').classList.add('hidden');
+    document.getElementById('userDashboard').classList.remove('hidden');
+
+    document.getElementById('userPhoneDisplay').innerText = `رقم الحساب: +967 ${currentUser}`;
+    updateBalanceDisplay();
+    renderCards();
+
+    // إظهار لوحة الأدمن إذا كان الحساب هو رقم الأدمن
+    if (currentUser === ADMIN_PHONE) {
+      document.getElementById('adminSection').classList.remove('hidden');
+    }
+  }
+
+  function updateBalanceDisplay() {
+    const balance = userBalances[currentUser] || 0;
+    document.getElementById('userBalance').innerText = `${balance} ريال`;
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('cardsGrid');
+    grid.innerHTML = '';
+
+    cardTiers.forEach(price => {
+      const stockCount = (cardStock[price] || []).length;
+      const cardEl = document.createElement('div');
+      cardEl.className = 'wifi-card';
+      cardEl.innerHTML = `
+        <h4>كارت ${price} ريال</h4>
+        <div class="price">${price} YER</div>
+        <div class="stock-tag">المتوفر: ${stockCount} كارت</div>
+        <button class="btn btn-primary" onclick="buyCard(${price})">شراء الآن</button>
+      `;
+      grid.appendChild(cardEl);
+    });
+  }
+
+  function buyCard(price) {
+    let balance = userBalances[currentUser] || 0;
+
+    if (balance < price) {
+      alert("رصيدك غير كافٍ! اضغط على زر شحن الرصيد للتواصل مع الأدمن.");
+      return;
+    }
+
+    if (!cardStock[price] || cardStock[price].length === 0) {
+      alert("عذراً، هذه الفئة غير متوفرة حالياً. تواصل مع الأدمن لتوفيرها.");
+      return;
+    }
+
+    // إتمام الشراء
+    const cardCode = cardStock[price].shift();
+    userBalances[currentUser] -= price;
+    
+    // حفظ التغييرات
+    localStorage.setItem('userBalances', JSON.stringify(userBalances));
+    localStorage.setItem('cardStock', JSON.stringify(cardStock));
+
+    updateBalanceDisplay();
+    renderCards();
+    addLog(`تم شراء كارت ${price} ريال - الكود: ${cardCode}`);
+
+    alert(`🎉 تم الشراء بنجاح!\nكود الكارت الخاص بك هو:\n${cardCode}`);
+  }
+
+  function contactAdminForTopUp() {
+    const msg = encodeURIComponent(`مرحباً أدمن شبكة الكلالي، أرغب بشحن رصيد لحسابي: ${currentUser}`);
+    window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${msg}`, '_blank');
+  }
+
+  function addLog(message) {
+    const logBox = document.getElementById('transactionLogs');
+    const item = document.createElement('div');
+    item.className = 'log-item';
+    item.innerText = `${new Date().toLocaleTimeString('ar-YE')} - ${message}`;
+    logBox.prepend(item);
+  }
+
+  // وظائف الأدمن
+  function addCardStock() {
+    const category = document.getElementById('adminCardCategory').value;
+    const codesInput = document.getElementById('adminCardCodes').value.trim();
+
+    if (!codesInput) {
+      alert("يرجى إدخال أكواد الكروت!");
+      return;
+    }
+
+    const newCodes = codesInput.split(',').map(c => c.trim()).filter(c => c.length > 0);
+    cardStock[category] = (cardStock[category] || []).concat(newCodes);
+
+    localStorage.setItem('cardStock', JSON.stringify(cardStock));
+    document.getElementById('adminCardCodes').value = '';
+    renderCards();
+    alert(`تمت إضافة ${newCodes.length} كارت بنجاح للفئة ${category} ريال!`);
+  }
+
+  function adminTopUpUser() {
+    const phone = document.getElementById('targetUserPhone').value.trim();
+    const amount = parseInt(document.getElementById('topUpAmount').value);
+
+    if (!phone || isNaN(amount) || amount <= 0) {
+      alert("يرجى إدخال رقم هاتف يمني ومبلغ صحيح!");
+      return;
+    }
+
+    userBalances[phone] = (userBalances[phone] || 0) + amount;
+    localStorage.setItem('userBalances', JSON.stringify(userBalances));
+
+    document.getElementById('targetUserPhone').value = '';
+    document.getElementById('topUpAmount').value = '';
+
+    if (phone === currentUser) {
+      updateBalanceDisplay();
+    }
+
+    alert(`تم شحن ${amount} ريال بنجاح للحساب ${phone}!`);
+  }
+
+  function logout() {
+    localStorage.removeItem('currentUser');
+    location.reload();
+  }
+
+  window.onload = initApp;
+</script>
+</body>
+</html>
